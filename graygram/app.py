@@ -21,6 +21,10 @@ def create_app(config=None):
     else:
         app.config.from_envvar('CONFIG')
 
+    if not app.debug:
+        from raven.contrib.flask import Sentry
+        Sentry(app)
+
     install_errorhandler(app)
     register_blueprints(app)
 

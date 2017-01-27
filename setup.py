@@ -13,6 +13,7 @@ install_requires = [
     'gunicorn==19.6.0',
     'psycopg2==2.6.2',
     'pytz==2016.10',
+    'raven[flask]==5.32.0',
     'redis==2.10.5',
     'wand==0.4.4',
 ]
