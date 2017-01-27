@@ -4,18 +4,7 @@ from flask_login import current_user
 
 from graygram import m
 from graygram import photo_uploader
-from graygram.s3 import usercontent_bucket
 from graygram.orm import db
-
-
-PHOTO_SIZES = {
-    'hd': 640,
-    'large': 320,
-    'medium': 200,
-    'thumbnail': 128,
-    'small': 64,
-    'tiny': 40,
-}
 
 
 class Photo(db.Model):
@@ -26,14 +15,10 @@ class Photo(db.Model):
     original_height = db.Column(db.Integer)
 
     def serialize(self):
-        url = {}
-        for name, size in PHOTO_SIZES.iteritems():
-            key = '{id}/{size}x{size}'.format(id=self.id, size=size)
-            url[name] = usercontent_bucket.url_for(key)
         return {
+            'id': self.id,
             'original_width': self.original_width,
             'original_height': self.original_height,
-            'url': url,
         }
 
     @classmethod
