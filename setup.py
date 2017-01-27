@@ -10,6 +10,7 @@ install_requires = [
     'Flask-Script==2.0.5',
     'Flask-SQLAlchemy==2.1',
     'Flask==0.12',
+    'gunicorn==19.6.0',
     'psycopg2==2.6.2',
     'pytz==2016.10',
     'redis==2.10.5',
