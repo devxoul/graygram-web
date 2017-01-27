@@ -22,7 +22,6 @@ def get_post(post_id):
 
 @view.route('', methods=['POST'])
 def create_post():
-    print request.files
     if 'photo' not in request.files:
         raise BadRequest("Missing parameter: 'photo'")
     try:

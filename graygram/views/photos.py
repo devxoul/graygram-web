@@ -52,5 +52,4 @@ def get_resized(photo_id, width, height):
         result = photo_uploader.upload(original,
                                        photo_id=photo_id,
                                        resize=(width, height))
-        print result.id
     return redirect(usercontent_bucket.url_for(key))
