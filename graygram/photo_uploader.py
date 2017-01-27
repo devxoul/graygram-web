@@ -24,16 +24,18 @@ class UploadResult(object):
 
 
 def upload(file, photo_id=None, resize=None):
+    photo_id = photo_id or str(uuid.uuid4())
     try:
         with Image(file=file) as image:
             if resize and len(resize) == 2:
                 key = '{photo_id}/{width}x{height}'.format(photo_id=photo_id,
                                                            width=resize[0],
                                                            height=resize[1])
+                length = min(image.size)
+                image.crop(width=length, height=length, gravity='center')
                 image.resize(resize[0], resize[1])
             else:
                 key = photo_id + '/original'
-            photo_id = photo_id or str(uuid.uuid4())
             usercontent_bucket.put_object(
                 ACL='public-read',
                 Key=key,
