@@ -22,6 +22,8 @@ def create_app(config=None):
         app.config.from_envvar('CONFIG')
 
     if not app.debug:
+        from flask.ext.sslify import SSLify
+        SSLify(app, permanent=True)
         from raven.contrib.flask import Sentry
         Sentry(app)
 

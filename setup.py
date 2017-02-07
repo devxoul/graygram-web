@@ -9,6 +9,7 @@ install_requires = [
     'Flask-Migrate==2.0.2',
     'Flask-Script==2.0.5',
     'Flask-SQLAlchemy==2.1',
+    'Flask-SSLify==0.1.5',
     'Flask==0.12',
     'gunicorn==19.6.0',
     'psycopg2==2.6.2',
