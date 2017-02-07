@@ -17,8 +17,6 @@ class Photo(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'original_width': self.original_width,
-            'original_height': self.original_height,
         }
 
     @classmethod
