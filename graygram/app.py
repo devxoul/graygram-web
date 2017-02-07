@@ -44,6 +44,8 @@ def register_blueprints(app):
         path = 'graygram.views.%s' % blueprint_name
         view = __import__(path, fromlist=[blueprint_name])
         blueprint = getattr(view, 'view')
+        if blueprint_name.startswith('api.'):
+            blueprint.subdomain = 'api'
         app.register_blueprint(blueprint)
 
 

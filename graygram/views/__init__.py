@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 blueprints = frozenset([
-    'feed',
-    'join',
+    'api.feed',
+    'api.join',
+    'api.login',
+    'api.photos',
+    'api.posts',
     'letsencrypt',
-    'login',
-    'photos',
-    'posts',
 ])
