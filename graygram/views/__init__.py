@@ -2,8 +2,9 @@
 
 blueprints = frozenset([
     'feed',
-    'photos',
     'join',
+    'letsencrypt',
     'login',
+    'photos',
     'posts',
 ])
