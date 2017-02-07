@@ -39,6 +39,7 @@ def create_app(config=None):
 
 
 def register_blueprints(app):
+    app.url_map.default_subdomain = 'www'
     for blueprint_name in blueprints:
         path = 'graygram.views.%s' % blueprint_name
         view = __import__(path, fromlist=[blueprint_name])
