@@ -38,3 +38,12 @@ def create_post():
     db.session.add(post)
     db.session.commit()
     return render_json(post)
+
+
+@view.route('/<post_id>', methods=['PUT', 'PATCH'])
+def update_post(post_id):
+    post = m.Post.query.get_or_404(post_id)
+    post.message = request.values.get('message')
+    db.session.add(post)
+    db.session.commit()
+    return render_json(post)
