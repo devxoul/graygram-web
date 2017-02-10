@@ -7,4 +7,5 @@ blueprints = frozenset([
     'api.photos',
     'api.posts',
     'letsencrypt',
+    'photos',
 ])
