@@ -11,7 +11,7 @@ from graygram.photo_uploader import InvalidImage
 from graygram.renderers import render_json
 
 
-view = Blueprint('posts', __name__, url_prefix='/posts')
+view = Blueprint('api.posts', __name__, url_prefix='/posts')
 
 
 @view.route('/<post_id>')

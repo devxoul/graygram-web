@@ -13,7 +13,7 @@ from graygram.orm import db
 from graygram.renderers import render_json
 
 
-view = Blueprint('join', __name__, url_prefix='/join')
+view = Blueprint('api.join', __name__, url_prefix='/join')
 
 
 @view.route('/username', methods=['POST'])

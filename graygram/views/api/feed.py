@@ -8,7 +8,7 @@ from graygram.paging import next_url
 from graygram.renderers import render_json
 
 
-view = Blueprint('feed', __name__, url_prefix='/feed')
+view = Blueprint('api.feed', __name__, url_prefix='/feed')
 
 
 @view.route('')

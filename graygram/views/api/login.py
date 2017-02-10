@@ -10,7 +10,7 @@ from graygram.crypto import bcrypt
 from graygram.renderers import render_json
 
 
-view = Blueprint('login', __name__, url_prefix='/login')
+view = Blueprint('api.login', __name__, url_prefix='/login')
 
 
 @view.route('/username', methods=['POST'])
