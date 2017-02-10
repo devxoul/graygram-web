@@ -2,6 +2,7 @@
 
 from botocore.exceptions import ClientError
 from flask import Blueprint
+from flask import current_app
 from flask import redirect
 from StringIO import StringIO
 from werkzeug.exceptions import NotFound
@@ -10,13 +11,18 @@ from graygram import photo_uploader
 from graygram.s3 import usercontent_bucket
 
 
+def usercontent_url(*path_components):
+    base_url = current_app.config['USERCONTENT_BASE_URL']
+    return '/'.join([base_url] + list(path_components))
+
+
 view = Blueprint('photos', __name__, url_prefix='/photos')
 
 
 @view.route('/<photo_id>')
 @view.route('/<photo_id>/original')
 def get_original(photo_id):
-    return redirect(usercontent_bucket.url_for(photo_id + '/original'))
+    redirect(usercontent_url(photo_id, 'original'))
 
 
 @view.route('/<photo_id>/<int:width>x<int:height>')
@@ -37,4 +43,4 @@ def get_resized(photo_id, width, height):
         photo_uploader.upload(original,
                               photo_id=photo_id,
                               resize=(width, height))
-    return redirect(usercontent_bucket.url_for(key))
+    return redirect(usercontent_url(key))
