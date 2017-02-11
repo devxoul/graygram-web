@@ -2,6 +2,7 @@
 
 from flask import Blueprint
 from flask import request
+from flask_login import login_required
 from werkzeug.exceptions import BadRequest
 
 from graygram import m
@@ -13,6 +14,7 @@ view = Blueprint('api.photos', __name__, url_prefix='/photos')
 
 
 @view.route('', methods=['POST'])
+@login_required
 def upload_photo():
     if 'file' not in request.files:
         raise BadRequest("Missing parameter: 'file'")

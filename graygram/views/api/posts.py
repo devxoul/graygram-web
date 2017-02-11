@@ -3,7 +3,9 @@
 from flask import Blueprint
 from flask import request
 from flask_login import current_user
+from flask_login import login_required
 from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import Forbidden
 
 from graygram import m
 from graygram.orm import db
@@ -21,6 +23,7 @@ def get_post(post_id):
 
 
 @view.route('', methods=['POST'])
+@login_required
 def create_post():
     if 'photo' not in request.files:
         raise BadRequest("Missing parameter: 'photo'")
@@ -41,8 +44,11 @@ def create_post():
 
 
 @view.route('/<post_id>', methods=['PUT', 'PATCH'])
+@login_required
 def update_post(post_id):
     post = m.Post.query.get_or_404(post_id)
+    if post.user != current_user:
+        raise Forbidden()
     post.message = request.values.get('message')
     db.session.add(post)
     db.session.commit()
