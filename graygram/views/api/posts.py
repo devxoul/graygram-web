@@ -53,3 +53,14 @@ def update_post(post_id):
     db.session.add(post)
     db.session.commit()
     return render_json(post)
+
+
+@view.route('/<post_id>', methods=['DELETE'])
+@login_required
+def delete_post(post_id):
+    post = m.Post.query.get_or_404(post_id)
+    if post.user != current_user:
+        raise Forbidden()
+    db.session.delete(post)
+    db.session.commit()
+    return ''
