@@ -4,6 +4,7 @@ blueprints = frozenset([
     'api.feed',
     'api.join',
     'api.login',
+    'api.logout',
     'api.photos',
     'api.posts',
     'letsencrypt',
