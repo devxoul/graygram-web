@@ -82,4 +82,6 @@ class Post(db.Model):
             'message': self.message,
             'user': self.user,
             'created_at': self.created_at,
+            'like_count': self.like_count,
+            'is_liked': self.is_liked,
         }
