@@ -1,5 +1,8 @@
 .DS_Store
 
+build/
+dist/
+*.egg-info/
 *.pyc
 
 dev.cfg
