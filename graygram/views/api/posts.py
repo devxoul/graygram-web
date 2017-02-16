@@ -5,10 +5,12 @@ from flask import request
 from flask_login import current_user
 from flask_login import login_required
 from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import Conflict
 from werkzeug.exceptions import Forbidden
 
 from graygram import m
 from graygram.orm import db
+from graygram.paging import next_url
 from graygram.photo_uploader import InvalidImage
 from graygram.renderers import render_json
 
@@ -64,3 +66,47 @@ def delete_post(post_id):
     db.session.delete(post)
     db.session.commit()
     return ''
+
+
+@view.route('/<post_id>/likes')
+def get_likes(post_id):
+    limit = request.values.get('limit', 30, type=int)
+    offset = request.values.get('offset', 0, type=int)
+    post_likes = m.PostLike.query \
+        .filter_by(post_id=post_id) \
+        .order_by(m.PostLike.liked_at.desc()) \
+        .offset(offset) \
+        .limit(limit)
+    data = {
+        'data': [post_like.serialize() for post_like in post_likes],
+        'paging': None,
+    }
+    if limit + offset < m.Post.query.count():
+        data['paging'] = {
+            'next': next_url(limit=limit, offset=offset),
+        }
+    return render_json(data)
+
+
+@view.route('/<post_id>/likes', methods=['POST'])
+@login_required
+def like_post(post_id):
+    post = m.Post.query.get_or_404(post_id)
+    if post.is_liked:
+        raise Conflict()
+    post.is_liked = True
+    db.session.add(post)
+    db.session.commit()
+    return render_json({})
+
+
+@view.route('/<post_id>/likes', methods=['DELETE'])
+@login_required
+def unlike_post(post_id):
+    post = m.Post.query.get_or_404(post_id)
+    if not post.is_liked:
+        raise Conflict()
+    post.is_liked = False
+    db.session.add(post)
+    db.session.commit()
+    return render_json({})
