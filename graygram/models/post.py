@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from sqlalchemy import select
 from sqlalchemy.ext.hybrid import hybrid_method
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import functions as sqlfuncs
@@ -21,6 +22,16 @@ class Post(db.Model):
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=sqlfuncs.now())
+
+    @hybrid_property
+    def like_count(self):
+        return m.PostLike.query.filter_by(post_id=self.id).count()
+
+    @like_count.expression
+    def like_count(cls):
+        return select([sqlfuncs.count(m.PostLike.user_id)]) \
+            .where(m.PostLike.post_id == cls.id) \
+            .label('count')
 
     @hybrid_method
     def is_liked_by(self, user):
