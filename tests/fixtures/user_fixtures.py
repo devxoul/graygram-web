@@ -3,6 +3,7 @@ from graygram.orm import db
 
 from . import create_fixture
 
+
 usernames = [
     'ironman',
     'captain_america',
@@ -16,6 +17,7 @@ def fixture_for(username):
         db.session.commit()
         return user
     return fixture
+
 
 for username in usernames:
     fixture_name = 'user_{}'.format(username)
