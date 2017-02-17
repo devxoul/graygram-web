@@ -33,3 +33,13 @@ def api(request, app):
     client.subdomain = 'api'
     client.headers['Accept'] = 'application/json'
     return client
+
+
+@pytest.fixture
+def login(request, api):
+    def _login(user):
+        api.post('/login/username', data={
+            'username': user.username,
+            'password': 'password_' + user.username,
+        })
+    return _login
