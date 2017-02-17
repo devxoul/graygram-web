@@ -70,10 +70,11 @@ def delete_post(post_id):
 
 @view.route('/<post_id>/likes')
 def get_likes(post_id):
+    post = m.Post.query.get_or_404(post_id)
     limit = request.values.get('limit', 30, type=int)
     offset = request.values.get('offset', 0, type=int)
     post_likes = m.PostLike.query \
-        .filter_by(post_id=post_id) \
+        .filter_by(post=post) \
         .order_by(m.PostLike.liked_at.desc()) \
         .offset(offset) \
         .limit(limit)
