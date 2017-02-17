@@ -1,4 +1,3 @@
-# flake8: noqa
 import pytest
 
 from clients import APIClient
@@ -6,8 +5,10 @@ from clients import APIClient
 from graygram.app import create_app
 from graygram.orm import db
 
-from tests.fixtures.users import user_ironman
-from tests.fixtures.users import user_captain_america
+from . import import_fixtures
+
+
+import_fixtures()
 
 
 @pytest.fixture

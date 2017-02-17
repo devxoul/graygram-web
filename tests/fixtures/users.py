@@ -1,19 +1,22 @@
-import pytest
-
 from graygram import m
 from graygram.orm import db
 
+from . import create_fixture
 
-@pytest.fixture
-def user_ironman(request):
-    user = m.User.create(username='ironman', password='password_ironman')
-    db.session.commit()
-    return user
+usernames = [
+    'ironman',
+    'captain_america',
+]
 
 
-@pytest.fixture
-def user_captain_america(request):
-    user = m.User.create(username='captain_america',
-                         password='password_captain_america')
-    db.session.commit()
-    return user
+def fixture_for(username):
+    def fixture(request):
+        password = 'password_' + username
+        user = m.User.create(username=username, password=password)
+        db.session.commit()
+        return user
+    return fixture
+
+for username in usernames:
+    fixture_name = 'user_{}'.format(username)
+    create_fixture(__name__, fixture_name, fixture_for(username))
