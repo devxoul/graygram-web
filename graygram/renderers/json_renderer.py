@@ -37,7 +37,11 @@ def render_json(data=None):
 
 def traverse(data):
     if isinstance(data, datetime):
-        return data.astimezone(pytz.utc).strftime('%Y-%m-%dT%H:%M:%S%z')
+        fmt = '%Y-%m-%dT%H:%M:%S%z'
+        try:
+            return data.astimezone(pytz.utc).strftime(fmt)
+        except ValueError:
+            return data.strftime(fmt)
 
     if isinstance(data, db.Model) and data.serialize:
         return traverse(data.serialize())
