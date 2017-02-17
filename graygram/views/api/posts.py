@@ -20,7 +20,7 @@ view = Blueprint('api.posts', __name__, url_prefix='/posts')
 
 @view.route('/<post_id>')
 def get_post(post_id):
-    post = m.Post.get_or_404(post_id)
+    post = m.Post.query.get_or_404(post_id)
     return render_json(post)
 
 
