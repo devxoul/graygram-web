@@ -22,4 +22,4 @@ def upload_photo():
         photo = m.Photo.upload(file=request.files['file'])
     except photo_uploader.InvalidImage:
         raise BadRequest("Invalid image")
-    return render_json(photo)
+    return render_json(photo), 201

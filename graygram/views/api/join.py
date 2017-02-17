@@ -38,4 +38,4 @@ def username():
         raise Conflict("User '{}' already exists.".format(username))
 
     login_user(user)
-    return render_json(user)
+    return render_json(user), 201

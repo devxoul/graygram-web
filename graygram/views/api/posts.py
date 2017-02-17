@@ -42,7 +42,7 @@ def create_post():
     post.message = message
     db.session.add(post)
     db.session.commit()
-    return render_json(post)
+    return render_json(post), 201
 
 
 @view.route('/<post_id>', methods=['PUT', 'PATCH'])
@@ -97,7 +97,7 @@ def like_post(post_id):
     post.is_liked = True
     db.session.add(post)
     db.session.commit()
-    return render_json({})
+    return render_json({}), 201
 
 
 @view.route('/<post_id>/likes', methods=['DELETE'])
