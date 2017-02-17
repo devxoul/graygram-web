@@ -8,7 +8,6 @@ from werkzeug.exceptions import BadRequest
 from werkzeug.exceptions import Conflict
 
 from graygram import m
-from graygram.crypto import bcrypt
 from graygram.orm import db
 from graygram.renderers import render_json
 
@@ -30,16 +29,7 @@ def username():
     if cred:
         raise Conflict("User '{}' already exists.".format(username))
 
-    user = m.User()
-    user.username = username
-    db.session.add(user)
-
-    cred = m.Credential()
-    cred.user = user
-    cred.type = 'username'
-    cred.key = username
-    cred.value = bcrypt.generate_password_hash(password)
-    db.session.add(cred)
+    user = m.User.create(username=username, password=password)
 
     try:
         db.session.commit()

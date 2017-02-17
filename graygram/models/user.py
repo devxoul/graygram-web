@@ -3,6 +3,8 @@
 from flask_login import UserMixin
 from sqlalchemy.sql import functions as sqlfuncs
 
+from graygram import m
+from graygram.crypto import bcrypt
 from graygram.orm import db
 
 
@@ -17,6 +19,21 @@ class User(db.Model, UserMixin):
                            server_default=sqlfuncs.now())
 
     credentials = db.relationship('Credential', backref='user', lazy='dynamic')
+
+    @classmethod
+    def create(cls, username, password):
+        user = m.User()
+        user.username = username
+        db.session.add(user)
+
+        cred = m.Credential()
+        cred.user = user
+        cred.type = 'username'
+        cred.key = username
+        cred.value = bcrypt.generate_password_hash(password)
+        db.session.add(cred)
+
+        return user
 
     def serialize(self):
         return {
