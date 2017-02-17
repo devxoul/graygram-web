@@ -1,16 +1,3 @@
-import pytest
-
-from graygram import m
-from graygram.orm import db
-
-
-@pytest.fixture
-def user_ironman(request):
-    user = m.User.create(username='ironman', password='password_ironman')
-    db.session.commit()
-    return user
-
-
 def test_join_failure_missing_username(api):
     r = api.post('/join/username', data={})
     assert r.status_code == 400
