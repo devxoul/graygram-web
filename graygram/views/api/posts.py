@@ -65,7 +65,7 @@ def delete_post(post_id):
         raise Forbidden()
     db.session.delete(post)
     db.session.commit()
-    return ''
+    return render_json({})
 
 
 @view.route('/<post_id>/likes')
