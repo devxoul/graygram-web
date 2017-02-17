@@ -19,6 +19,10 @@ install_requires = [
     'wand==0.4.4',
 ]
 
+tests_requires = [
+    'pytest==3.0.6',
+]
+
 setup(name='Graygram',
       version='0.1.0',
       description='Graygram',
@@ -26,4 +30,5 @@ setup(name='Graygram',
       author_email='devxoul@gmail.com',
       url='https://github.com/devxoul/graygram-web',
       packages=['graygram'],
-      install_requires=install_requires)
+      install_requires=install_requires,
+      tests_requires=tests_requires)
