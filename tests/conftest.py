@@ -20,6 +20,8 @@ def app(request):
 
     def teardown():
         db.session.close()
+        for table in db.metadata.tables.keys():
+            db.session.execute('DROP TABLE {}'.format(table))
         db.drop_all()
         ctx.pop()
 
