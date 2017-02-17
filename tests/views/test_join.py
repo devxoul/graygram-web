@@ -26,4 +26,4 @@ def test_join_success(api):
         'username': 'ironman',
         'password': 'password_ironman',
     })
-    assert r.status_code == 200
+    assert r.status_code == 201
