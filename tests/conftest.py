@@ -19,7 +19,7 @@ def app(request):
     db.create_all()
 
     def teardown():
-        db.session.rollback()
+        db.session.close()
         db.drop_all()
         ctx.pop()
 
