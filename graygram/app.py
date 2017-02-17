@@ -65,18 +65,21 @@ def init_extensions(app):
 
 def install_errorhandler(app):
     def errorhandler(err):
+        if not err.message:
+            err.message = err.description
         accept = request.headers.get('Accept', '')
         if 'application/json' in accept:
             data = {
                 'status': err.code,
                 'name': err.name,
-                'description': err.description
+                'description': err.description,
+                'message': err.message,
             }
             res = json.dumps(data)
             return Response(res, mimetype='application/json', status=err.code)
         else:
-            html = "<h1>{0}: {1}</h1><p>{2}</p>".format(err.code, err.name,
-                                                        err.description)
+            html = "<h1>{0}: {1}</h1><p>{2}</p><p>{3}</p>" \
+                .format(err.code, err.name, err.description, err.message)
             return Response(html, status=err.code)
 
     for code in default_exceptions.iterkeys():
