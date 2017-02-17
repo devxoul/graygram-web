@@ -27,11 +27,23 @@ class LazyBucket(object):
     def url_for(self, key):
         return self.baseurl + '/' + key
 
+    def head_object(self, key):
+        return client.head_object(Bucket=self.name, Key=key)
 
+    def object_exists(self, key):
+        try:
+            self.head_object(key)
+            return True
+        except:
+            return False
+
+
+_config = Config(signature_version='s3v4', region_name='ap-northeast-2')
+client = boto3.client('s3', config=_config)
+resource = boto3.resource('s3', config=_config)
 usercontent_bucket = LazyBucket()
 
 
 def init_app(app):
-    config = Config(signature_version='s3v4')
-    s3 = boto3.resource('s3', config=config)
-    usercontent_bucket.resolve(s3.Bucket(app.config['S3_USERCONTENT_BUCKET']))
+    bucket = resource.Bucket(app.config['S3_USERCONTENT_BUCKET'])
+    usercontent_bucket.resolve(bucket)
