@@ -49,17 +49,31 @@ def login(request, api):
 
 @pytest.fixture(scope='session', autouse=True)
 def s3(request):
-    import boto3
-    from botocore.client import Config
+    from graygram.s3 import client
 
     def get_usercontent_bucket_name():
         execfile('config/test.cfg')
         return locals()['S3_USERCONTENT_BUCKET']
 
     bucket_name = get_usercontent_bucket_name()
-    config = Config(signature_version='s3v4')
-    s3 = boto3.resource('s3', config=config, region_name='ap-northeast-1')
     try:
-        s3.create_bucket(Bucket=bucket_name)
+        client.create_bucket(Bucket=bucket_name, CreateBucketConfiguration={
+            'LocationConstraint': 'ap-northeast-2',
+        })
     except:
         pass
+
+    def teardown():
+        try:
+            clear_bucket(bucket_name)
+            client.delete_bucket(Bucket=bucket_name)
+        except:
+            pass
+    request.addfinalizer(teardown)
+
+
+def clear_bucket(bucket_name):
+    from graygram.s3 import client
+    r = client.list_objects(Bucket=bucket_name)
+    objects = [dict(Key=content['Key']) for content in r['Contents']]
+    client.delete_objects(Bucket=bucket_name, Delete={'Objects': objects})
