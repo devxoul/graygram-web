@@ -45,3 +45,21 @@ def login(request, api):
             'password': 'password_' + user.username,
         })
     return _login
+
+
+@pytest.fixture(scope='session', autouse=True)
+def s3(request):
+    import boto3
+    from botocore.client import Config
+
+    def get_usercontent_bucket_name():
+        execfile('config/test.cfg')
+        return locals()['S3_USERCONTENT_BUCKET']
+
+    bucket_name = get_usercontent_bucket_name()
+    config = Config(signature_version='s3v4')
+    s3 = boto3.resource('s3', config=config, region_name='ap-northeast-1')
+    try:
+        s3.create_bucket(Bucket=bucket_name)
+    except:
+        pass
