@@ -37,5 +37,5 @@ def username():
         db.session.rollback()
         raise Conflict("User '{}' already exists.".format(username))
 
-    login_user(user)
+    login_user(user, remember=True)
     return render_json(user), 201

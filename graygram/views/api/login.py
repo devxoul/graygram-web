@@ -31,5 +31,5 @@ def username():
     if not password_correct:
         raise BadRequest("Wrong password")
 
-    login_user(cred.user)
+    login_user(cred.user, remember=True)
     return render_json(cred.user)
