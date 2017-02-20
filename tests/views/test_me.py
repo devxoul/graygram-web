@@ -22,7 +22,8 @@ def test_update_profile_photo__failure_no_file(api, login, user_ironman):
     login(user_ironman)
     r = api.put('/me/photo')
     assert r.status_code == 400
-    assert 'Missing' in r.json['message'] and 'photo' in r.json['message']
+    assert r.json['error']['field'] == 'photo'
+    assert 'missing' in r.json['error']['message'].lower()
 
 
 def test_update_profile_photo__success(api, login, user_ironman):

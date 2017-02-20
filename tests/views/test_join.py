@@ -1,7 +1,8 @@
 def test_join_failure_missing_username(api):
     r = api.post('/join/username', data={})
     assert r.status_code == 400
-    assert 'username' in r.json['message']
+    assert r.json['error']['field'] == 'username'
+    assert 'missing' in r.json['error']['message'].lower()
 
 
 def test_join_failure_missing_password(api):
@@ -9,7 +10,8 @@ def test_join_failure_missing_password(api):
         'username': 'abc',
     })
     assert r.status_code == 400
-    assert 'password' in r.json['message']
+    assert r.json['error']['field'] == 'password'
+    assert 'missing' in r.json['error']['message'].lower()
 
 
 def test_join_failure_username_alread_exists(api, user_ironman):
@@ -18,7 +20,8 @@ def test_join_failure_username_alread_exists(api, user_ironman):
         'password': 'secret',
     })
     assert r.status_code == 409
-    assert 'already exists' in r.json['message']
+    assert r.json['error']['field'] == 'username'
+    assert 'already exists' in r.json['error']['message']
 
 
 def test_join_success(api):

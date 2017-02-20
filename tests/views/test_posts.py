@@ -19,14 +19,16 @@ def test_create_post__failure__invalid_image(api, login, user_ironman):
     login(user_ironman)
     r = api.post('/posts', data={'photo': open('README.md')})
     assert r.status_code == 400
-    assert 'Invalid image' in r.json['message']
+    assert r.json['error']['field'] == 'photo'
+    assert 'invalid image' in r.json['error']['message'].lower()
 
 
 def test_create_post__failure__missing_photo(api, login, user_ironman):
     login(user_ironman)
     r = api.post('/posts')
     assert r.status_code == 400
-    assert 'Missing' in r.json['message'] and 'photo' in r.json['message']
+    assert r.json['error']['field'] == 'photo'
+    assert 'missing' in r.json['error']['message'].lower()
 
 
 def test_create_post__success__photo_only(api, login, user_ironman):
