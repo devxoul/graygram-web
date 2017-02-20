@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import json
 import os
 
 from flask import Flask
 from flask import request
-from flask import Response
 from werkzeug.exceptions import default_exceptions
 
+from graygram import exceptions
 from graygram import s3
 from graygram.crypto import bcrypt
 from graygram.orm import db
@@ -64,23 +63,10 @@ def init_extensions(app):
 
 
 def install_errorhandler(app):
-    def errorhandler(err):
-        if not err.message:
-            err.message = err.description
-        accept = request.headers.get('Accept', '')
-        if 'application/json' in accept:
-            data = {
-                'status': err.code,
-                'name': err.name,
-                'description': err.description,
-                'message': err.message,
-            }
-            res = json.dumps(data)
-            return Response(res, mimetype='application/json', status=err.code)
-        else:
-            html = "<h1>{0}: {1}</h1><p>{2}</p><p>{3}</p>" \
-                .format(err.code, err.name, err.description, err.message)
-            return Response(html, status=err.code)
+    def errorhandler(error):
+        if not isinstance(error, exceptions.HTTPException):
+            error = getattr(exceptions, error.__class__.__name__)()
+        return error.get_response(request.environ)
 
     for code in default_exceptions.iterkeys():
         app.register_error_handler(code, errorhandler)
