@@ -5,9 +5,9 @@ from flask import Blueprint
 from flask import current_app
 from flask import redirect
 from StringIO import StringIO
-from werkzeug.exceptions import NotFound
 
 from graygram import photo_uploader
+from graygram.exceptions import NotFound
 from graygram.s3 import usercontent_bucket
 
 

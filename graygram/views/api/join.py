@@ -4,10 +4,10 @@ from flask import Blueprint
 from flask import request
 from flask_login import login_user
 from sqlalchemy.exc import IntegrityError
-from werkzeug.exceptions import BadRequest
-from werkzeug.exceptions import Conflict
 
 from graygram import m
+from graygram.exceptions import BadRequest
+from graygram.exceptions import Conflict
 from graygram.orm import db
 from graygram.renderers import render_json
 
@@ -19,15 +19,16 @@ view = Blueprint('api.join', __name__, url_prefix='/join')
 def username():
     username = request.values.get('username')
     if not username:
-        raise BadRequest("Missing parameter: 'username'")
+        raise BadRequest(message="Missing parameter", field='username')
 
     password = request.values.get('password')
     if not password:
-        raise BadRequest("Missing parameter: 'password'")
+        raise BadRequest(message="Missing parameter", field='password')
 
     cred = m.Credential.query.filter_by(type='username', key=username).first()
     if cred:
-        raise Conflict("User '{}' already exists.".format(username))
+        raise Conflict(message="User '{}' already exists.".format(username),
+                       field='username')
 
     user = m.User.create(username=username, password=password)
 
@@ -35,7 +36,8 @@ def username():
         db.session.commit()
     except IntegrityError:
         db.session.rollback()
-        raise Conflict("User '{}' already exists.".format(username))
+        raise Conflict(message="User '{}' already exists.".format(username),
+                       field='username')
 
     login_user(user, remember=True)
     return render_json(user), 201

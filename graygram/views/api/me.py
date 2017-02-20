@@ -4,9 +4,9 @@ from flask import Blueprint
 from flask import request
 from flask_login import current_user
 from flask_login import login_required
-from werkzeug.exceptions import BadRequest
 
 from graygram import m
+from graygram.exceptions import BadRequest
 from graygram.orm import db
 from graygram.photo_uploader import InvalidImage
 from graygram.renderers import render_json
@@ -25,11 +25,11 @@ def get_me():
 @login_required
 def update_me_photo():
     if 'photo' not in request.files:
-        raise BadRequest("Missing parameter: 'photo'")
+        raise BadRequest(message="Missing parameter", field='photo')
     try:
         photo = m.Photo.upload(file=request.files['photo'])
     except InvalidImage:
-        raise BadRequest("Invalid image")
+        raise BadRequest(message="Invalid image", field='photo')
     current_user.photo = photo
     db.session.add(current_user)
     db.session.commit()

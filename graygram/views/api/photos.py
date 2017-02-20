@@ -3,10 +3,10 @@
 from flask import Blueprint
 from flask import request
 from flask_login import login_required
-from werkzeug.exceptions import BadRequest
 
 from graygram import m
 from graygram import photo_uploader
+from graygram.exceptions import BadRequest
 from graygram.renderers import render_json
 
 

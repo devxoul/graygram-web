@@ -4,11 +4,11 @@ from flask import Blueprint
 from flask import request
 from flask_login import current_user
 from flask_login import login_required
-from werkzeug.exceptions import BadRequest
-from werkzeug.exceptions import Conflict
-from werkzeug.exceptions import Forbidden
 
 from graygram import m
+from graygram.exceptions import BadRequest
+from graygram.exceptions import Conflict
+from graygram.exceptions import Forbidden
 from graygram.orm import db
 from graygram.paging import next_url
 from graygram.photo_uploader import InvalidImage
@@ -28,11 +28,11 @@ def get_post(post_id):
 @login_required
 def create_post():
     if 'photo' not in request.files:
-        raise BadRequest("Missing parameter: 'photo'")
+        raise BadRequest(message="Missing parameter", field='photo')
     try:
         photo = m.Photo.upload(file=request.files['photo'])
     except InvalidImage:
-        raise BadRequest('Invalid image')
+        raise BadRequest(message="Invalid image", field='photo')
 
     message = request.values.get('message')
 
