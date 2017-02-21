@@ -3,6 +3,7 @@
 blueprints = frozenset([
     'api.feed',
     'api.join',
+    'api.index',
     'api.login',
     'api.logout',
     'api.me',

@@ -3,6 +3,7 @@
 import os
 
 from flask import Flask
+from flask import redirect
 from flask import request
 from werkzeug.exceptions import default_exceptions
 
@@ -33,6 +34,10 @@ def create_app(config=None):
     bcrypt.init_app(app)
     s3.init_app(app)
     init_extensions(app)
+
+    @app.route('/')
+    def index():
+        return redirect('https://github.com/devxoul/graygram-ios')
 
     return app
 
