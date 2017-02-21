@@ -5,3 +5,4 @@ REST API Reference
 
    restapi/overview
    restapi/auth
+   restapi/feed
