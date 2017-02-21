@@ -30,5 +30,5 @@ setup(name='Graygram',
       author_email='devxoul@gmail.com',
       url='https://github.com/devxoul/graygram-web',
       packages=['graygram'],
-      install_requires=install_requires,
+      install_requires=install_requires + tests_requires,
       tests_requires=tests_requires)
