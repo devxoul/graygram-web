@@ -1,11 +1,11 @@
 # Graygram
 
 [![Build Status](https://travis-ci.org/devxoul/graygram-web.svg?branch=master)](https://travis-ci.org/devxoul/graygram-web)
-[![Documentation Status](https://readthedocs.org/projects/graygram-web/badge/?version=latest)](http://graygram-web.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/graygram/badge/?version=latest)](http://graygram.readthedocs.io/en/latest/?badge=latest)
 
 The backend server application for [Graygram](https://www.graygram.com). Written in Python 2.7 and Flask.
 
-* [Documentation](http://graygram-web.readthedocs.io/en/latest/)
+* [Documentation](http://graygram.readthedocs.io/en/latest/)
 * [Graygram for iOS](https://github.com/devxoul/graygram-ios)
 
 ## Development
