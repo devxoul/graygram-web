@@ -1,7 +1,7 @@
 """Add post_like
 
 Revision ID: 8dd6149e6a9c
-Revises: 
+Revises: e851b34d79b8
 Create Date: 2017-02-17 04:14:11.737063
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '8dd6149e6a9c'
-down_revision = None
+down_revision = 'e851b34d79b8'
 branch_labels = None
 depends_on = None
 
