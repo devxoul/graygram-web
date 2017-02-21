@@ -26,6 +26,7 @@ tests_requires = [
 docs_requires = [
     'Sphinx==1.5.2',
     'sphinxcontrib-httpdomain==1.5.0',
+    'sphinx-rtd-theme==0.1.9',
 ]
 
 setup(name='Graygram',
