@@ -7,3 +7,4 @@ REST API Reference
    restapi/auth
    restapi/feed
    restapi/posts
+   restapi/users

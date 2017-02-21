@@ -18,6 +18,21 @@ view = Blueprint('api.users', __name__)
 @view.route('/me')
 @login_required
 def get_me():
+    """Get my profile
+
+    **Example JSON response**:
+
+    .. sourcecode:: json
+
+        {
+          "username": "devxoul",
+          "photo": null,
+          "created_at": "2017-02-21T16:59:35+0000",
+          "id": 1
+        }
+
+    :statuscode 401: Not authorized
+    """
     return render_json(current_user.serialize())
 
 
