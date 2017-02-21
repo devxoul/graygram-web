@@ -29,7 +29,7 @@ def test_update_profile_photo__failure_no_file(api, login, user_ironman):
 def test_update_profile_photo__success(api, login, user_ironman):
     login(user_ironman)
     r = api.put('/me/photo', data={
-        'photo': open('./tests/images/ironman.jpg'),
+        'photo': open('./tests/images/ironman.png'),
     })
     assert r.status_code == 200
     key = r.json['photo']['id'] + '/original'
@@ -44,7 +44,7 @@ def test_delete_profile_photo__failure_not_logged_in(api, login):
 def test_delete_profile_photo__success(api, login, user_ironman):
     login(user_ironman)
     r = api.put('/me/photo', data={
-        'photo': open('./tests/images/ironman.jpg'),
+        'photo': open('./tests/images/ironman.png'),
     })
     r = api.delete('/me/photo')
     assert r.status_code == 200
