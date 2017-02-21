@@ -5,8 +5,8 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = Graygram
-SOURCEDIR     = docs
-BUILDDIR      = docs/build
+SOURCEDIR     = .
+BUILDDIR      = build
 
 # Put it first so that "make" without argument is like "make help".
 help:
