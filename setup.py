@@ -23,6 +23,11 @@ tests_requires = [
     'pytest==3.0.6',
 ]
 
+docs_requires = [
+    'Sphinx==1.5.2',
+    'sphinxcontrib-httpdomain==1.5.0',
+]
+
 setup(name='Graygram',
       version='0.1.0',
       description='Graygram',
@@ -30,5 +35,5 @@ setup(name='Graygram',
       author_email='devxoul@gmail.com',
       url='https://github.com/devxoul/graygram-web',
       packages=['graygram'],
-      install_requires=install_requires + tests_requires,
+      install_requires=install_requires + tests_requires + docs_requires,
       tests_requires=tests_requires)
