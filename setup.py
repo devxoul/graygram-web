@@ -5,6 +5,7 @@ from setuptools import setup
 install_requires = [
     'boto3==1.4.4',
     'Flask-Bcrypt==0.7.1',
+    'Flask-Cache==0.13.1',
     'Flask-Login==0.4.0',
     'Flask-Migrate==2.0.2',
     'Flask-Script==2.0.5',
