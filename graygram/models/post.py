@@ -5,6 +5,7 @@ from sqlalchemy.ext.hybrid import hybrid_method
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql import functions as sqlfuncs
 
+from graygram import cache
 from graygram import m
 from graygram.orm import db
 
@@ -23,7 +24,11 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=sqlfuncs.now())
 
+    def __repr__(self):
+        return '<Post %d>' % self.id
+
     @hybrid_property
+    @cache.memoize(timeout=300)
     def like_count(self):
         return m.PostLike.query.filter_by(post_id=self.id).count()
 
@@ -34,6 +39,7 @@ class Post(db.Model):
             .label('count')
 
     @hybrid_method
+    @cache.memoize(timeout=300)
     def is_liked_by(self, user):
         post_like = m.PostLike.query \
             .filter_by(user_id=user.id, post_id=self.id) \
@@ -74,6 +80,8 @@ class Post(db.Model):
                 .first()
             if post_like:
                 db.session.delete(post_like)
+        cache.delete_memoized('is_liked_by', self, current_user)
+        cache.delete_memoized('like_count', self)
 
     def serialize(self):
         return {

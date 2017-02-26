@@ -5,6 +5,7 @@ from flask import request
 from flask_login import current_user
 from flask_login import login_required
 
+from graygram import cache
 from graygram import m
 from graygram.exceptions import BadRequest
 from graygram.exceptions import Conflict
@@ -237,6 +238,7 @@ def like_post(post_id):
     :statuscode 409: Already liked
     """
     post = m.Post.query.get_or_404(post_id)
+    cache.delete_memoized('is_liked_by', post, current_user)
     if post.is_liked:
         raise Conflict()
     post.is_liked = True
@@ -261,6 +263,7 @@ def unlike_post(post_id):
     :statuscode 409: Already unliked
     """
     post = m.Post.query.get_or_404(post_id)
+    cache.delete_memoized('is_liked_by', post, current_user)
     if not post.is_liked:
         raise Conflict()
     post.is_liked = False

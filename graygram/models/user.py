@@ -20,6 +20,9 @@ class User(db.Model, UserMixin):
 
     credentials = db.relationship('Credential', backref='user', lazy='dynamic')
 
+    def __repr__(self):
+        return '<User %d>' % self.id
+
     @classmethod
     def create(cls, username, password):
         user = m.User()
