@@ -10,7 +10,8 @@ class Credential(db.Model):
     TYPES = frozenset(['username', 'admin'])
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False,
+                        index=True)
     type = db.Column(db.ENUM(*TYPES, name='credential_types'), nullable=False)
 
     #: `username`: username

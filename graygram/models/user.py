@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     photo = db.relationship('Photo', foreign_keys=[photo_id])
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
-                           server_default=sqlfuncs.now())
+                           server_default=sqlfuncs.now(), index=True)
 
     credentials = db.relationship('Credential', backref='user', lazy='dynamic')
 

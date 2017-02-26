@@ -18,11 +18,12 @@ class Post(db.Model):
 
     message = db.Column(db.Text)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False,
+                        index=True)
     user = db.relationship('User')
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
-                           server_default=sqlfuncs.now())
+                           server_default=sqlfuncs.now(), index=True)
 
     def __repr__(self):
         return '<Post %d>' % self.id

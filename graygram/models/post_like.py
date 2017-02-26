@@ -13,7 +13,7 @@ class PostLike(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key=True)
 
     liked_at = db.Column(db.DateTime(timezone=True), nullable=False,
-                         server_default=sqlfuncs.now())
+                         server_default=sqlfuncs.now(), index=True)
 
     def serialize(self):
         return {
