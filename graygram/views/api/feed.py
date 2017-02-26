@@ -85,7 +85,7 @@ def feed():
         .offset(offset) \
         .limit(limit)
     data = {
-        'data': map(lambda post: post.serialize(), posts),
+        'data': [post.serialize() for post in posts],
         'paging': None,
     }
     if limit + offset < m.Post.query.count():
