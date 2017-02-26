@@ -7,6 +7,7 @@ from flask import redirect
 from flask import request
 from werkzeug.exceptions import default_exceptions
 
+from graygram import cache
 from graygram import exceptions
 from graygram import s3
 from graygram.crypto import bcrypt
@@ -30,6 +31,7 @@ def create_app(config=None):
     install_errorhandler(app)
     register_blueprints(app)
 
+    cache.init_app(app)
     db.init_app(app)
     bcrypt.init_app(app)
     s3.init_app(app)

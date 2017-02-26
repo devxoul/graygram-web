@@ -2,6 +2,7 @@ import pytest
 
 from clients import APIClient
 
+from graygram import cache
 from graygram.app import create_app
 from graygram.orm import db
 
@@ -17,12 +18,14 @@ def app(request):
     ctx = app.app_context()
     ctx.push()
     db.create_all()
+    cache.clear()
 
     def teardown():
         db.session.close()
         for table in db.metadata.tables.keys():
             db.session.execute('DROP TABLE {}'.format(table))
         db.drop_all()
+        cache.clear()
         ctx.pop()
 
     request.addfinalizer(teardown)
