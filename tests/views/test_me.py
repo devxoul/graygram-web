@@ -48,4 +48,4 @@ def test_delete_profile_photo__success(api, login, user_ironman):
     })
     r = api.delete('/me/photo')
     assert r.status_code == 200
-    assert r.json['photo'] is None
+    assert r.json['photo']['id'] == '_default/user'
