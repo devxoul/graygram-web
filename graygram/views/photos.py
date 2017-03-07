@@ -19,13 +19,13 @@ def usercontent_url(*path_components):
 view = Blueprint('photos', __name__, url_prefix='/photos')
 
 
-@view.route('/<photo_id>')
-@view.route('/<photo_id>/original')
+@view.route('/<path:photo_id>')
+@view.route('/<path:photo_id>/original')
 def get_original(photo_id):
     return redirect(usercontent_url(photo_id, 'original'))
 
 
-@view.route('/<photo_id>/<int:width>x<int:height>')
+@view.route('/<path:photo_id>/<int:width>x<int:height>')
 def get_resized(photo_id, width, height):
     if width <= 0 or height <= 0 or width != height:
         raise NotFound()
