@@ -77,3 +77,17 @@ def install_errorhandler(app):
 
     for code in default_exceptions.iterkeys():
         app.register_error_handler(code, errorhandler)
+
+
+def prepare_default_data(app):
+    from graygram import m
+    with app.app_context():
+        default_user_photo_id = '_default/user'
+        default_user_photo = m.Photo.query.get(default_user_photo_id)
+        if default_user_photo is None:
+            default_user_photo = m.Photo(id=default_user_photo_id,
+                                         user_id=1,
+                                         original_width=128,
+                                         original_height=128,)
+            db.session.add(default_user_photo)
+            db.session.commit()

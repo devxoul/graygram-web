@@ -23,5 +23,12 @@ def make_shell_context():
     }
 
 
+@manager.command
+def prepare_default_data():
+    """Prepares default data"""
+    from graygram.app import prepare_default_data
+    prepare_default_data(current_app)
+
+
 if __name__ == '__main__':
     manager.run()

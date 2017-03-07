@@ -4,6 +4,7 @@ from clients import APIClient
 
 from graygram import cache
 from graygram.app import create_app
+from graygram.app import prepare_default_data
 from graygram.orm import db
 
 from . import import_fixtures
@@ -18,6 +19,7 @@ def app(request):
     ctx = app.app_context()
     ctx.push()
     db.create_all()
+    prepare_default_data(app)
     cache.clear()
 
     def teardown():
