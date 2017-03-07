@@ -42,6 +42,6 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'photo': self.photo,
+            'photo': self.photo or m.Photo.query.get('_default/user'),
             'created_at': self.created_at,
         }
