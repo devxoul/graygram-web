@@ -22,7 +22,7 @@ view = Blueprint('photos', __name__, url_prefix='/photos')
 @view.route('/<photo_id>')
 @view.route('/<photo_id>/original')
 def get_original(photo_id):
-    redirect(usercontent_url(photo_id, 'original'))
+    return redirect(usercontent_url(photo_id, 'original'))
 
 
 @view.route('/<photo_id>/<int:width>x<int:height>')
