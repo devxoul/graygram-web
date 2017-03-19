@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
-from flask import Response
 from flask_login import logout_user
+
+from graygram.renderers import render_json
 
 
 view = Blueprint('api.logout', __name__)
@@ -30,4 +31,4 @@ def logout():
     """
 
     logout_user()
-    return Response()
+    return render_json({})
